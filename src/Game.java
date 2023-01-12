@@ -113,17 +113,25 @@ public class Game {
 
     private boolean checkSides(int [][] check, int row, int col){
         int chk = check[row][col];
-        try {
-            return (
-                    chk == check[row-1][col] ||
-                            chk == check[row+1][col] ||
-                            chk == check[row][col-1]||
-                            chk == check[row][col+1]
-            );
+        boolean existsLeftSide = (col - 1 >= 0);
+        boolean existsRightSide = (col + 1 < check[0].length);
+        boolean existsTopSide = (row - 1 >= 0);
+        boolean existsDownSide = (row + 1 < check.length);
+        boolean ans = false;
+        if(existsTopSide){
+            ans = ans || chk == check[row-1][col];
         }
-        catch (Exception e){
-            return false;
+        if(existsDownSide){
+            ans = ans || chk == check[row+1][col];
         }
+        if(existsLeftSide){
+            ans = ans || chk == check[row][col-1];
+        }
+        if(existsRightSide){
+            ans = ans || chk == check[row][col+1];
+        }
+
+        return ans;
 
     }
     private int[][] intField(){

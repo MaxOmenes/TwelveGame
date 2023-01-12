@@ -3,6 +3,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ParamsDialog extends JDialog{
+
+    public final int DEFAULT_COL_COUNT = 5;
+    public final int DEFAULT_ROW_COUNT = 5;
     private JPanel mainDialog;
     private JSpinner rowSpinner;
     private JSpinner colSpinner;
@@ -45,8 +48,16 @@ public class ParamsDialog extends JDialog{
             }
         });
         buttonOK.addActionListener(e -> {
-            params.setRowCount((int) rowSpinner.getValue());
-            params.setColumnCount((int) colSpinner.getValue());
+            if ((int) rowSpinner.getValue() <= 10 && (int) colSpinner.getValue() <= 10) {
+                params.setRowCount((int) rowSpinner.getValue());
+                params.setColumnCount((int) colSpinner.getValue());
+            }
+            else{
+                JOptionPane.showMessageDialog(new JFrame(), "A lot of Cells!!!", "Message", JOptionPane.INFORMATION_MESSAGE);
+                params.setRowCount(DEFAULT_ROW_COUNT);
+                params.setColumnCount(DEFAULT_COL_COUNT);
+            }
+
             oldCellSize = gameFieldJTable.getRowHeight();
             this.setVisible(false);
         });
